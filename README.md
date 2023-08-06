@@ -1,7 +1,10 @@
 # shardingsphere-v540-readwrite-splitting-test
-- For https://github.com/dynamic-datasource/dynamic-datasource-samples/pull/28 .
+
+- For https://github.com/dynamic-datasource/dynamic-datasource-samples/pull/28
+  and https://github.com/apache/shardingsphere/issues/27955 .
 
 - Run the following command on the Ubuntu 22.04.3 instance.
+
 ```shell
 sudo apt install unzip zip curl sed -y
 curl -s "https://get.sdkman.io" | bash
@@ -15,6 +18,7 @@ cd ./shardingsphere-v540-readwrite-splitting-test/
 ```
 
 - Error Log as follows.
+
 ```shell
 [ERROR] com.lingh.shardingspherev540readwritesplittingtest.MapperLayerTests.whenRequestToFindAll  Time elapsed: 0.057 s  <<< ERROR!
 org.springframework.jdbc.UncategorizedSQLException: 
