@@ -22,7 +22,7 @@ rules:
   - !SHARDING
     tables:
       t_order:
-        actualDataNodes: shardingmaster.t_order$->{0..1}
+        actualDataNodes: lingh_readwrite_data_sources.t_order$->{0..1}
         tableStrategy:
           standard:
             shardingColumn: order_id
@@ -42,7 +42,7 @@ rules:
         props:
           max-vibration-offset: 1
           max-tolerate-time-difference-milliseconds: 10
-          
+
   - !READWRITE_SPLITTING
     dataSources:
       lingh_readwrite_data_sources:
@@ -58,4 +58,4 @@ rules:
   - !SINGLE
     tables:
       - "*.*"
-    defaultDataSource: shardingmaster
+    defaultDataSource: lingh_readwrite_data_sources
