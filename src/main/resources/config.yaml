@@ -2,19 +2,19 @@ dataSources:
   shardingmaster:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:master;MODE=MYSQL;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
+    jdbcUrl: jdbc:h2:mem:master;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
     username: sa
     password: ""
   shardingslave0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:slave1;MODE=MYSQL;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
+    jdbcUrl: jdbc:h2:mem:slave1;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
     username: sa
     password: ""
   shardingslave1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:slave2;MODE=MYSQL;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
+    jdbcUrl: jdbc:h2:mem:slave2;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
     username: sa
     password: ""
 
@@ -34,7 +34,7 @@ rules:
     lingh_inline:
       type: INLINE
       props:
-        algorithm-expression: t_order$->{ORDER_ID % 2}
+        algorithm-expression: t_order$->{order_id % 2}
   keyGenerators:
     lingh_snowflake:
       type: SNOWFLAKE
