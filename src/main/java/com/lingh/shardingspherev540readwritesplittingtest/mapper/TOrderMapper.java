@@ -1,6 +1,6 @@
 package com.lingh.shardingspherev540readwritesplittingtest.mapper;
 
-import com.lingh.shardingspherev540readwritesplittingtest.entity.TOrder;
+import com.lingh.shardingspherev540readwritesplittingtest.TOrder;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;

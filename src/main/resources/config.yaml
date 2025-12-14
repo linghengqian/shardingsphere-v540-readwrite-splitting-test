@@ -1,22 +1,16 @@
 dataSources:
   shardingmaster:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:master;MODE=MYSQL;IGNORECASE=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
-    username: sa
-    password: ""
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    jdbcUrl: jdbc:tc:mysql:9.4.0-oraclelinux9:///master?TC_INITSCRIPT=schema.sql
   shardingslave0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:slave1;MODE=MYSQL;IGNORECASE=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
-    username: sa
-    password: ""
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    jdbcUrl: jdbc:tc:mysql:9.4.0-oraclelinux9:///slave1?TC_INITSCRIPT=schema.sql
   shardingslave1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:slave2;MODE=MYSQL;IGNORECASE=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
-    username: sa
-    password: ""
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    jdbcUrl: jdbc:tc:mysql:9.4.0-oraclelinux9:///slave2?TC_INITSCRIPT=schema.sql
 rules:
   - !SHARDING
     tables:
@@ -33,7 +27,7 @@ rules:
       lingh_inline:
         type: INLINE
         props:
-          algorithm-expression: t_order$->{ORDER_ID % 2}
+          algorithm-expression: t_order$->{order_id % 2}
     keyGenerators:
       lingh_snowflake:
         type: SNOWFLAKE
