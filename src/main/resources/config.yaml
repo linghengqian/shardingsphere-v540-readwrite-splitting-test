@@ -2,53 +2,52 @@ dataSources:
   shardingmaster:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:master;MODE=MYSQL;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
+    jdbcUrl: jdbc:h2:mem:master;MODE=MYSQL;IGNORECASE=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
     username: sa
     password: ""
   shardingslave0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:slave1;MODE=MYSQL;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
+    jdbcUrl: jdbc:h2:mem:slave1;MODE=MYSQL;IGNORECASE=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
     username: sa
     password: ""
   shardingslave1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:mem:slave2;MODE=MYSQL;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
+    jdbcUrl: jdbc:h2:mem:slave2;MODE=MYSQL;IGNORECASE=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'
     username: sa
     password: ""
-
 rules:
-- !SHARDING
-  tables:
-    t_order:
-      actualDataNodes: shardingmaster.t_order$->{0..1}
-      tableStrategy:
-        standard:
-          shardingColumn: order_id
-          shardingAlgorithmName: lingh_inline
-      keyGenerateStrategy:
-        column: order_id
-        keyGeneratorName: lingh_snowflake
-  shardingAlgorithms:
-    lingh_inline:
-      type: INLINE
-      props:
-        algorithm-expression: t_order$->{ORDER_ID % 2}
-  keyGenerators:
-    lingh_snowflake:
-      type: SNOWFLAKE
-      props:
-        max-vibration-offset: 1
-        max-tolerate-time-difference-milliseconds: 10
-- !READWRITE_SPLITTING
-  dataSources:
-    lingh_readwrite_data_sources:
-      writeDataSourceName: shardingmaster
-      readDataSourceNames:
-        - shardingslave0
-        - shardingslave1
-      loadBalancerName: lingh_load_balance_algorithm
-  loadBalancers:
-    lingh_load_balance_algorithm:
-      type: ROUND_ROBIN
+  - !SHARDING
+    tables:
+      t_order:
+        actualDataNodes: shardingmaster.t_order$->{0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: lingh_inline
+        keyGenerateStrategy:
+          column: order_id
+          keyGeneratorName: lingh_snowflake
+    shardingAlgorithms:
+      lingh_inline:
+        type: INLINE
+        props:
+          algorithm-expression: t_order$->{ORDER_ID % 2}
+    keyGenerators:
+      lingh_snowflake:
+        type: SNOWFLAKE
+        props:
+          max-vibration-offset: 1
+          max-tolerate-time-difference-milliseconds: 10
+  - !READWRITE_SPLITTING
+    dataSourceGroups:
+      lingh_readwrite_data_sources:
+        writeDataSourceName: shardingmaster
+        readDataSourceNames:
+          - shardingslave0
+          - shardingslave1
+        loadBalancerName: lingh_load_balance_algorithm
+    loadBalancers:
+      lingh_load_balance_algorithm:
+        type: ROUND_ROBIN

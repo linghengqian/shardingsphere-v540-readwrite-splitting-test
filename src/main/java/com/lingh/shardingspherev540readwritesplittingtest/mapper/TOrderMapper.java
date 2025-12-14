@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
+@SuppressWarnings({"SqlNoDataSourceInspection"})
 @Component
 public interface TOrderMapper {
     @Select("select * from t_order")

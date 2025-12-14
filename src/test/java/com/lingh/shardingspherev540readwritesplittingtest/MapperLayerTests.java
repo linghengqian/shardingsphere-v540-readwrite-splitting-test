@@ -20,15 +20,15 @@ public class MapperLayerTests {
 
     @Test
     void whenRequestToFindAll() {
-        assertEquals(tOrderMapper.findAll().size(), 0);
+        assertEquals(0, tOrderMapper.findAll().size());
     }
 
     @Test
     void whenRequestToAddByNameAndUserId() {
         int firstNumberOfAffectedRows = tOrderMapper.addAll("Bright", 114514L);
         int secondNumberOfAffectedRows = tOrderMapper.addAll("Jordan", 114515L);
-        assertEquals(firstNumberOfAffectedRows + secondNumberOfAffectedRows, 2);
-        assertEquals(tOrderMapper.findAll().size(), 2);
+        assertEquals(2, firstNumberOfAffectedRows + secondNumberOfAffectedRows);
+        assertEquals(2, tOrderMapper.findAll().size());
     }
 
     @Test
@@ -40,8 +40,8 @@ public class MapperLayerTests {
         tOrderMapper.addAll("Michael", 114518L);
         tOrderMapper.addAll("Tony", 114519L);
         int numberOfAffectedRows = tOrderMapper.deleteById(114514L);
-        assertEquals(numberOfAffectedRows, 1);
-        assertEquals(tOrderMapper.findAll().size(), 5);
+        assertEquals(1, numberOfAffectedRows);
+        assertEquals(5, tOrderMapper.findAll().size());
     }
 
     @Test
@@ -53,8 +53,7 @@ public class MapperLayerTests {
         tOrderMapper.addAll("Michael", 114518L);
         tOrderMapper.addAll("Tony", 114519L);
         int numberOfAffectedRows = tOrderMapper.deleteAll();
-        assertEquals(numberOfAffectedRows, 6);
-        assertEquals(tOrderMapper.findAll().size(), 0);
+        assertEquals(6, numberOfAffectedRows);
+        assertEquals(0, tOrderMapper.findAll().size());
     }
-
 }
